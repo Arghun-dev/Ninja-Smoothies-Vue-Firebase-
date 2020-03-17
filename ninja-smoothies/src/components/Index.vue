@@ -1,9 +1,9 @@
 <template>
   <div class="index">
     <div class="row">
-      <div class="col s12 m4" v-for='(smoothy, id) in smoothies' :key='id'>
+      <div class="col s12 m4" v-for='smoothy in smoothies' :key='smoothy.id'>
         <div class="card blue-grey darken-1">
-          <a href=""><i class="small material-icons deleteIcon">delete</i></a>
+          <i class="small material-icons deleteIcon" @click='deleteSmoothy(smoothy.id)'>delete</i>
           <div class="card-content white-text">
             <span class="card-title">{{ smoothy.title }}</span>
           </div>
@@ -25,10 +25,15 @@ export default {
   data () {
     return {
       smoothies: [
-        { title: 'Ninja Brew', slug: 'ninja-brew', ingredients: ['bananas', 'coffee', 'milk'], id: 1 },
-        { title: 'Morning Mood', slug: 'morning-mood', ingredients: ['mango', 'lime', 'juice'], id: 2 },
-        { title: 'Morning Mood', slug: 'morning-mood', ingredients: ['mango', 'lime', 'juice'], id: 2 }
+        { title: 'Ninja Brew', slug: 'ninja-brew', ingredients: ['bananas', 'coffee', 'milk'], id: '1' },
+        { title: 'Morning Mood', slug: 'morning-mood', ingredients: ['mango', 'lime', 'juice'], id: '2' }
       ]
+    }
+  },
+
+  methods: {
+    deleteSmoothy(id) {
+      this.smoothies = this.smoothies.filter(smoothy => smoothy.id !== id)
     }
   }
 }
@@ -47,7 +52,8 @@ export default {
 }
 
 .deleteIcon {
-  color: #f44336;
+  cursor: pointer;
+  color: #ccc;
   float: right;
   padding: 1rem;
 }
