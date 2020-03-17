@@ -32,7 +32,11 @@ export default {
 
   methods: {
     deleteSmoothy(id) {
-      this.smoothies = this.smoothies.filter(smoothy => smoothy.id !== id)
+      // Delete Doc from firestore
+      db.collection('smoothies').doc(id).delete()
+      .then(() => {
+        this.smoothies = this.smoothies.filter(smoothy => smoothy.id !== id)
+      })
     }
   },
 
