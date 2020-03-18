@@ -12,7 +12,7 @@
               <span class="chip">{{ ingredient }}</span>
             </li>
           </div>
-          <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">edit</i></a>
+          <router-link :to="{ name: 'EditSmoothy', params: {smoothy_slug: smoothy.slug} }" class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">edit</i></router-link>
         </div>
       </div>
     </div>
