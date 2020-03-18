@@ -9,6 +9,12 @@
                 </div>
             </div>
             <div class="row">
+                <div class="input-field col s12" v-for="(ing, index) in ingredients" :key="index">
+                    <input id="ingredient" type="text" class="validate" v-model="ingredients[index]" name="ingredient">
+                    <label for="ingredient">ingredient:</label>
+                </div>
+            </div>
+            <div class="row">
                 <div class="input-field col s12">
                     <input id="SmoothyTitle" type="text" class="validate" v-model="another" name="title" @keydown.tab.prevent="addIng">
                     <label for="SmoothyTitle">Add an ingredient:</label>
@@ -21,6 +27,9 @@
 </template>
 
 <script>
+import db from '@/firebase/init'
+import slugify from 'slugify'
+
 export default {
     name: 'AddSmoothy',
     data() {
@@ -28,13 +37,33 @@ export default {
             title: null,
             another: null,
             ingredients: [],
-            feedback: null
+            feedback: null,
+            slug: null
         }
     },
 
     methods: {
         AddSmoothy() {
-            console.log(this.title, this.ingredients)
+            if(this.title){
+                this.feedback = null
+                // Create a slug
+                this.slug = slugify(this.title, {
+                    replacement: "-",
+                    remove: /[$*_=~.()'"!\-:@]/g,
+                    lower: true
+                })
+                db.collection('smoothies').add({
+                    title: this.title,
+                    ingredients: this.ingredients,
+                    slug: this.slug
+                }).then(() => {
+                    this.$router.push({ name: 'Index' })
+                }).catch(err => {
+                    console.log(err)
+                })
+            } else {
+                this.feedback = 'You must enter a smoothy title'
+            }
         },
 
         addIng(){
