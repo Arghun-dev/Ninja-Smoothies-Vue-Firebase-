@@ -12,6 +12,7 @@
                 <div class="input-field col s12" v-for="(ing, index) in ingredients" :key="index">
                     <input id="ingredient" type="text" class="validate" v-model="ingredients[index]" name="ingredient">
                     <label for="ingredient">ingredient:</label>
+                    <i class="small material-icons DeleteIcon" @click="deleteIng(ing)">delete</i>
                 </div>
             </div>
             <div class="row">
@@ -74,6 +75,10 @@ export default {
             } else {
                 this.feedback = 'You must enter a value to add an ingredient'
             }
+        },
+
+        deleteIng(ing){
+            this.ingredients = this.ingredients.filter(ingredient => ingredient !== ing)
         }
     }
 }
@@ -102,5 +107,12 @@ form .row {
     transform: translateX(-50%);
     margin-top: 2rem;
     background-color: #3f51b5;
+}
+
+.DeleteIcon {
+    color: red;
+    cursor: pointer;
+    position: absolute;
+    transform: translate(-2rem, .5rem);
 }
 </style>
